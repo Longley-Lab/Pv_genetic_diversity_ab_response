@@ -94,9 +94,6 @@ for(i in 1:length(control_cat))
 #control data and brazil data need to have the same number of columns - each antibody column needs to line up in the columns
 # 150 is it will drop ab measurments when more than 150 samples missing for that protein
 
-# so for Brazil IgM going to try and running without dropping any - normally it drops 5 ehime proteins from IgG but this doesn't matter for this analyis
-# as not using IgG only for RBP2b IgG. Then it should keep my IgM data for L19, L41 and L34 where I had to exclude data from 5 plates (so more than 150 missing)
-
 AB <- rbind( Thai_data[,17:39], brazil_data[,17:39], control_data[,17:39] )
 
 AB <- log(AB)
@@ -122,7 +119,7 @@ View(ant_names)
 ############################################
 ## Create shortened antibody names
 #either add new shortened names, or replace shortened names...
-#I just added the names of the ones I was using because there were only 9
+
 ant_names_short = c("MSP8 L34 sal1","Pv-fam-a SEM-8 Hap1", "MSP8 SEM-10 Hap1", 
                     "DBPII SEM-35 Hap1", "DBPII AH", "PTEX150 L18 sal1", 
                     "Pv-fam-a L02 sal1", "Pv DBPII sal1", "RBP2a SEM-28 Hap1", 
@@ -191,12 +188,12 @@ for (i in selected_cols ) {
   p <- ggplot(antibody_data, aes(x = Category, y = AB[, i], fill = Category)) +
     geom_boxplot(na.rm = TRUE) +
     
-    # 🔥 Group labels at y = 6.5e-6 (custom position)
+  
     annotate("text", x = 2.5, y = log(5e-6), label = "Thailand", size = 6, vjust = 1) +
     annotate("text", x = 6.5, y = log(5e-6), label = "Brazil", size = 6, vjust = 1) +
     annotate("text", x = 10.5, y = log(5e-6), label = "Controls", size = 6, vjust = 1) +
     
-    # 🔥 Custom x-axis line at y = 6.5e-6
+
     geom_segment(x = 0.38, xend = 12.6, y = log(7e-6), yend = log(7e-6), 
                  color = "black", linewidth = 0.8) +
     geom_segment(x = 2.5, xend = 2.5, y = log(7e-6), yend = log(6e-6), 
@@ -220,15 +217,15 @@ for (i in selected_cols ) {
     ) +
     geom_hline(yintercept = log(1.95e-5), linetype = "dashed") +
     geom_hline(yintercept = log(0.02), linetype = "dashed") +
-    coord_cartesian(clip = "off") +  # 🔥 Allow annotations outside plot area
+    coord_cartesian(clip = "off") +  
     
     theme_minimal() +
     theme(
-      axis.text.x = element_blank(),  # 🔥 Hide default x-axis text
+      axis.text.x = element_blank(),  
       axis.title.x = element_blank(),
       axis.title.y = element_text(size = 14),
       legend.position = "none", 
-      plot.title = element_text(face = "bold", size = 18, hjust = 0.5),# 🔥 Remove the legend
+      plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
       plot.margin = margin(t = 10, r = 10, b = 70, l = 10),
       panel.grid = element_blank(),
       axis.ticks.y = element_line(color = "black", linewidth = 0.8),
@@ -249,7 +246,7 @@ for (i in selected_cols ) {
 
 
 
-# 🔥 Create dummy data for the legend
+# Create dummy data for the legend
 legend_data <- data.frame(
   Category = factor(c(
     "infected", 
@@ -274,7 +271,7 @@ legend_data <- data.frame(
   y = 1:8   # Dummy values for y-axis
 )
 
-# 🔥 Define color mapping as per specification
+#  Define color mapping as per specification
 legend_colors <- c(
   "infected" = "#CC79A7",                     # Reddish Purple
   "infected 1-9 months" = "#D55E00",           # Vermillion
@@ -286,7 +283,7 @@ legend_colors <- c(
   "VBDR" = "#5F9EA0"                          # Cadet Blue
 )
 
-# 🔥 Create dummy plot to extract legend with two-column layout
+# Create dummy plot to extract legend with two-column layout
 legend_plot <- ggplot(legend_data, aes(x = x, y = y, color = Category)) +
   geom_point(size = 5) +
   scale_color_manual(values = legend_colors) +
@@ -299,10 +296,10 @@ legend_plot <- ggplot(legend_data, aes(x = x, y = y, color = Category)) +
     legend.spacing.x = unit(1, "cm")
   ) +
   guides(
-    color = guide_legend(ncol = 2)  # 🔥 Arrange legend in two columns
+    color = guide_legend(ncol = 2) 
   )
 
-# 🔥 Save the legend plot as a separate high-resolution PNG
+# Save the legend plot as a separate high-resolution PNG
 ggsave(
   filename = "legend_two_column_layout.png",
   plot = legend_plot,
