@@ -1,4 +1,4 @@
-# antibody response analysis against different *Plasmodium vivax* antigen haplotypes
+# Immunoreactivity analysis against different *Plasmodium vivax* antigen haplotypes
 
 ## Overview
 This project contains two R scripts used to analyze and visualize antibody response against different *Plasmodium vivax* antigen haplotypes.
