@@ -11,16 +11,16 @@ library(writexl)
 # Set working directories
 data_sources <- list(
   Thai = list(
-    data_path = "C:/Users/wenco/OneDrive/Honours course/Aim 1/Aim 1 R working directory/Thai result/20240629_Thai_IgG_geneticdiversity.csv",
+    data_path = "Thai_IgG_geneticdiversity.csv",
     label = "Thai"
   ),
   Brazil = list(
-    data_path = "C:/Users/wenco/OneDrive/Honours course/Aim 1/Aim 1 R working directory/20240630_Brazil_IgG_geneticdiversity.csv",
+    data_path = "Brazil_IgG_geneticdiversity.csv",
     label = "Brazilian"
   )
 )
 
-control_path <- "C:/Users/wenco/OneDrive/Honours course/Aim 1/Aim 1 R working directory/20241002_NC_IgG_geneticdiversity.csv"
+control_path <- "NC_IgG_geneticdiversity.csv"
 
 # Antigen group definitions
 # Safe names for internal use
