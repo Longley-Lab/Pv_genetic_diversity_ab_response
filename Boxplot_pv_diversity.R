@@ -19,11 +19,11 @@ library(gridExtra)
 
 setwd()
 
-Thai_data = read.csv("20240629_Thai_IgG_geneticdiversity.csv")
+Thai_data = read.csv("Thai_IgG_geneticdiversity.csv")
 
-brazil_data = read.csv("20240630_Brazil_IgG_geneticdiversity.csv")
+brazil_data = read.csv("Brazil_IgG_geneticdiversity.csv")
 
-control_data = read.csv("20241002_NC_IgG_geneticdiversity.csv")
+control_data = read.csv("NC_IgG_geneticdiversity.csv")
 
 
 
