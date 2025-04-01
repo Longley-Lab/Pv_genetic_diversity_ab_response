@@ -9,11 +9,11 @@ This project contains two R scripts used to analyze and visualize antibody respo
 Generates boxplots to visualize the **distribution and variability** of antibody responses across infection categories.
 
 - **Generates:**
-  - One boxplot per antigen (`.png`)
+  - One boxplot per antigen haplotype (`.png`)
   - A separate color legend (`legend_two_column_layout.png`)
 
 ### 2. `ROC_analysis_pv_diversity.R`
-Performs ROC curve analysis to evaluate the **diagnostic performance** of antigen candidates across cohorts.
+Performs ROC curve analysis to evaluate the **classification performance** of antigen candidates across cohorts.
 
 - **Generates:**
   - ROC curves (`.svg`) for each antigen family
