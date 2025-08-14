@@ -17,13 +17,22 @@ library(gridExtra)
 ###################################
 ###################################
 
-setwd()
+setwd('')
 
-Thai_data = read.csv("Thai_IgG_geneticdiversity.csv")
+Thai_data = read.csv("Input_Files/Thai_IgG_geneticdiversity.csv")
 
-brazil_data = read.csv("Brazil_IgG_geneticdiversity.csv")
+brazil_data = read.csv("Input_Files/Brazil_IgG_geneticdiversity.csv")
 
-control_data = read.csv("NC_IgG_geneticdiversity.csv")
+control_data = read.csv("Input_Files/NC_IgG_geneticdiversity.csv")
+
+
+# Create 'output' folder if it doesn't exist
+if (!dir.exists("output")) {
+  dir.create("output")
+  cat("Created 'output' folder\n")
+} else {
+  cat("'output' folder already exists\n")
+}
 
 
 
@@ -130,9 +139,9 @@ ant_names_short = c("MSP8 L34 sal1","Pv-fam-a SEM-8 Hap1", "MSP8 SEM-10 Hap1",
 
 ant_names_hap = c("MSP8 Sal-1","Pv-fam-a Hap1", "MSP8 Hap1", 
                   "DBPII Hap1", "DBPII AH", "PTEX150 Sal-1", 
-                  "fam-a Sal-1", "DBPII Sal-1", "RBP2A Hap1", 
-                  "DBPII Hap2", "PTEX150 Hap1", "RBP2A Sal-1", 
-                  "RBP2A Hap9","MSP5 Hap2", "MSP5 Hap1", "RIPR Hap1",
+                  "Pv-fam-a Sal-1", "DBPII Sal-1", "RBP2a Hap1", 
+                  "DBPII Hap2", "PTEX150 Hap1", "RBP2a Sal-1", 
+                  "RBP2a Hap9","MSP5 Hap2", "MSP5 Hap1", "RIPR Hap1",
                   "RIPR Hap2", "RBP2b Hap1", "RBP2b Hap2", "RBP2b Hap3",
                   "RBP2b Sal-1", "RIPR Sal-1", "MSP5 Sal-1")
 
@@ -189,9 +198,9 @@ for (i in selected_cols ) {
     geom_boxplot(na.rm = TRUE) +
     
   
-    annotate("text", x = 2.5, y = log(5e-6), label = "Thailand", size = 6, vjust = 1) +
-    annotate("text", x = 6.5, y = log(5e-6), label = "Brazil", size = 6, vjust = 1) +
-    annotate("text", x = 10.5, y = log(5e-6), label = "Controls", size = 6, vjust = 1) +
+    annotate("text", x = 2.5, y = log(5e-6), label = "Thailand", size = 12, vjust = 1) +
+    annotate("text", x = 6.5, y = log(5e-6), label = "Brazil", size = 12, vjust = 1) +
+    annotate("text", x = 10.5, y = log(5e-6), label = "Controls", size = 12, vjust = 1) +
     
 
     geom_segment(x = 0.38, xend = 12.6, y = log(7e-6), yend = log(7e-6), 
@@ -223,19 +232,20 @@ for (i in selected_cols ) {
     theme(
       axis.text.x = element_blank(),  
       axis.title.x = element_blank(),
-      axis.title.y = element_text(size = 14),
+      axis.title.y = element_text(size = 32),
       legend.position = "none", 
-      plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+      plot.title = element_text(face = "bold", size = 42, hjust = 0.5),
       plot.margin = margin(t = 10, r = 10, b = 70, l = 10),
       panel.grid = element_blank(),
       axis.ticks.y = element_line(color = "black", linewidth = 0.8),
-      axis.ticks.length = unit(0.25, "cm")
+      axis.ticks.length = unit(0.25, "cm"),
+      axis.text.y = element_text(size = 26)
     ) +
     ylab("RAU") +
     ggtitle(paste(ant_names_hap[i]))
    
   ggsave(
-    filename = paste(ant_names_short[i], ".png"),
+    filename = paste0("output/", ant_names_short[i], ".png"),
     plot = p,
     width = 8, height = 6, units = "in",
     dpi = 300
@@ -256,7 +266,7 @@ legend_data <- data.frame(
     "negative controls: Thai RC",
     "negative controls: Brazilian RC",
     "negative controls: Aus RC",
-    "VBDR"
+    "negative controls: VBDR"
   ), levels = c(
     "infected", 
     "infected 1-9 months", 
@@ -265,7 +275,7 @@ legend_data <- data.frame(
     "negative controls: Thai RC",
     "negative controls: Brazilian RC",
     "negative controls: Aus RC",
-    "VBDR"
+    "negative controls: VBDR"
   )),
   x = 1:8,  # Dummy values for x-axis
   y = 1:8   # Dummy values for y-axis
@@ -280,7 +290,7 @@ legend_colors <- c(
   "negative controls: Thai RC" = "#0072B2",    # Blue
   "negative controls: Brazilian RC" = "#4682B4", # Steel Blue
   "negative controls: Aus RC" = "#56B4E9",     # Sky Blue
-  "VBDR" = "#5F9EA0"                          # Cadet Blue
+  "negative controls: VBDR" = "#5F9EA0"                          # Cadet Blue
 )
 
 # Create dummy plot to extract legend with two-column layout
@@ -291,7 +301,7 @@ legend_plot <- ggplot(legend_data, aes(x = x, y = y, color = Category)) +
   theme(
     legend.position = "bottom",
     legend.title = element_blank(),
-    legend.text = element_text(size = 12),
+    legend.text = element_text(size = 16),
     legend.key.size = unit(1, "cm"),
     legend.spacing.x = unit(1, "cm")
   ) +
@@ -301,7 +311,7 @@ legend_plot <- ggplot(legend_data, aes(x = x, y = y, color = Category)) +
 
 # Save the legend plot as a separate high-resolution PNG
 ggsave(
-  filename = "legend_two_column_layout.png",
+  filename = "output/legend_two_column_layout.png",
   plot = legend_plot,
   width = 10, height = 3, units = "in",
   dpi = 300
