@@ -9,18 +9,29 @@ library(writexl)
 # ========== CONFIGURATION ========== #
 
 # Set working directories
+setwd('')
+
 data_sources <- list(
   Thai = list(
-    data_path = "Thai_IgG_geneticdiversity.csv",
+    data_path = "Input_Files/Thai_IgG_geneticdiversity.csv",
     label = "Thai"
   ),
   Brazil = list(
-    data_path = "Brazil_IgG_geneticdiversity.csv",
+    data_path = "Input_Files/Brazil_IgG_geneticdiversity.csv",
     label = "Brazilian"
   )
 )
 
-control_path <- "NC_IgG_geneticdiversity.csv"
+control_path <- "Input_Files/NC_IgG_geneticdiversity.csv"
+
+# Create 'output' folder if it doesn't exist
+if (!dir.exists("output")) {
+  dir.create("output")
+  cat("Created 'output' folder\n")
+} else {
+  cat("'output' folder already exists\n")
+}
+
 
 # Antigen group definitions
 # Safe names for internal use
@@ -40,11 +51,11 @@ antigen_titles <- list(
   DBP    = "DBPII",
   MSP5   = "MSP5",
   MSP8   = "MSP8",
-  RBP2A  = "RBP2A",
-  RBP2B  = "RBP2B",
+  RBP2A  = "RBP2a",
+  RBP2B  = "RBP2b",
   RIPR   = "RIPR",
   PTEX   = "PTEX150",
-  fam_a  = "fam-a"
+  fam_a  = "Pv-fam-a"
 )
 
 colors_list <- list(
@@ -164,18 +175,18 @@ plot_ROC <- function(indices, colors, title, filename, roc_results) {
     theme(
       legend.position = c(1.0, 0.25),
       legend.justification = "left",
-      legend.title = element_text(size = 24, face = "bold"),
-      legend.text = element_text(size = 20),
+      legend.title = element_text(size = 30, face = "bold"),
+      legend.text = element_text(size = 28),
       legend.key.size = unit(0.5, "cm"),
       legend.key.height = unit(1, "cm"),
       legend.spacing.y = unit(2, "cm"),
-      plot.title = element_text(hjust = 0.5, size = 28, face = "bold"),
+      plot.title = element_text(hjust = 0.5, size = 34, face = "bold"),
       panel.grid.major = element_line(color = "gray90"),
       plot.margin = margin(1, 5, 1, 1, "cm"),
-      axis.title.x = element_text(size = 20),
-      axis.title.y = element_text(size = 20),
-      axis.text.x = element_text(size = 16),    
-      axis.text.y = element_text(size = 16) 
+      axis.title.x = element_text(size = 28),
+      axis.title.y = element_text(size = 28),
+      axis.text.x = element_text(size = 24),    
+      axis.text.y = element_text(size = 24) 
     ) +
     guides(color = guide_legend(byrow = TRUE))
   
@@ -207,9 +218,9 @@ for (region in names(data_sources)) {
     indices <- antigen_groups[[group]]
     colors <- colors_list[[group]]
     title <- paste(data_sources[[region]]$label, antigen_titles[[group]])
-    filename <- paste0("ROC_", region, "_", group, ".svg")
+    filename <- file.path("output", paste0("ROC_", region, "_", group, ".svg"))
     AUC_table <- calculate_AUC(indices, roc_results)
-    write_xlsx(AUC_table, paste0("AUC_", region, "_", group, ".xlsx"))
+    write_xlsx(AUC_table, file.path("output", paste0("AUC_", region, "_", group, ".xlsx")))
     plot_ROC(indices, colors, title, filename, roc_results)
   }
 }
