@@ -3,8 +3,6 @@ library(dplyr)
 library(MASS)
 library(ROCR)
 library(gridExtra)
-library(lme4)
-library(lmerTest)
 library(emmeans)
 library(tidyr)
 library(stringr)
@@ -24,7 +22,7 @@ library(purrr)
 ###################################
 ###################################
 
-setwd('C:/Users/wenco/Desktop/Pv_genetic_diversity_ab_response-main')
+setwd('') #The wd should be the main folder of the repo Pv_genetic_diversity_ab_response
 
 Thai_data = read.csv("Input_Files/Thai_IgG_geneticdiversity.csv")
 
@@ -407,18 +405,6 @@ long_df$variant <- relevel(long_df$variant, ref = "Sal-1")
 # ----------------------------------------------------------
 # 4) Simple per-antigen LMM + Sal-1 vs others via emmeans
 # ----------------------------------------------------------
-# make sure reference is Sal-1
-# Ensure Sal-1 is the reference
-# make sure reference is Sal-1
-
-# ----------------------------------------------------------
-# 4) Unpaired linear models + emmeans (no helpers)
-# ----------------------------------------------------------
-
-# Ensure reference levels
-# ----------------------------------------------------------
-# 4) Unpaired linear models + emmeans (t-based CIs; no CI normalizer)
-# ----------------------------------------------------------
 
 # Ensure reference levels
 long_df$variant  <- stats::relevel(factor(long_df$variant), ref = "Sal-1")
@@ -527,3 +513,4 @@ cat("Done. Files written (if non-empty):\n",
     "- output/lmm/UNPAIRED_LM_BY_STRATUM.csv\n",
     "- output/lmm/UNPAIRED_LM_OVERALL_BY_COHORT.csv\n",
     "- output/lmm/UNPAIRED_LM_COUNTRY_PAIRWISE.csv\n")
+
