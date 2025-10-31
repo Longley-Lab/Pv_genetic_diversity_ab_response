@@ -7,10 +7,12 @@ This project contains two R scripts used to analyze and visualize antibody respo
 
 ### 1. `Boxplot_pv_diversity.R`
 Generates boxplots to visualize the **distribution and variability** of antibody responses across infection categories.
+Statistically compare between haplotypes and Sal-1, and between countries.
 
 - **Generates:**
   - One boxplot per antigen haplotype (`.png`)
   - A separate color legend (`legend_two_column_layout.png`)
+  - Four csv files summarises the antibody response statistics ('.csv')
 
 ### 2. `ROC_analysis_pv_diversity.R`
 Performs ROC curve analysis to evaluate the **classification performance** of antigen candidates across cohorts.
@@ -40,7 +42,7 @@ These files include:
 
 Ensure these R packages are installed before running the scripts:
 ```r
-install.packages(c("ggplot2", "dplyr", "pROC", "ROCR", "MASS", "gridExtra", "writexl", "svglite"))
+install.packages(c("ggplot2", "dplyr", "pROC", "ROCR", "MASS", "gridExtra", "writexl", "svglite","emmeans", "tidyr", "stringr", "purrr"))
 ```
 
 ## Usage
@@ -62,6 +64,7 @@ install.packages(c("ggplot2", "dplyr", "pROC", "ROCR", "MASS", "gridExtra", "wri
 |--------------------------|----------------------------------------|--------------------|
 | `Boxplot_pv_diversity.R`     | Individual boxplots for each antigen groups   | `.png`             |
 |                          | Combined two-column color legend       | `.png`             |
+|                          | Antibody response statistics       | `.csv`             |
 | `ROC_analysis_pv_diversity.R` | ROC curves per antigen group            | `.svg`             |
 |                          | AUC stat summary tables                     | `.xlsx`            |
 
